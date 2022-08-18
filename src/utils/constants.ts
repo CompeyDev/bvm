@@ -2,7 +2,7 @@
 const packageJson = require('../../package.json')
 export const VERSION = packageJson.version;
 export const HELP_MENU = `
-Bun Version Manager (v${1})
+Bun Version Manager (v${VERSION})
 
 Note: <version> refers to any version-like string bvm understands.
 
