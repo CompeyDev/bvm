@@ -1,7 +1,7 @@
 import { fetchVersions } from '../lib/fetchVersions';
 
 export default async function main() {
-    const versions = await fetchVersions();
+    const versions: any = await fetchVersions();
     console.log("Versions available:")
     versions.forEach((version: String) => {
         version = version.replace('bun-', '');

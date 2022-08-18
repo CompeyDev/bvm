@@ -1,38 +1,49 @@
 import { HELP_MENU, VERSION } from './utils/constants';
 import listVersions from './commands/listVersions';
-import { fetchVersions } from './lib/fetchVersions';
-
+import { fetchVersions, fetchLatestVersion } from './lib/fetchVersions';
+import getVersion from './commands/version';
+import helpMenu from './commands/help'
 const args = process.argv.slice(2);
 const command = args[0];
 
 async function main() {
     if (!command) {
-        console.log(HELP_MENU);
+        console.log(helpMenu());
         process.exit(0);
     }
     switch (command) {
         case "--help":
-            console.log("Zero");
+            console.log(helpMenu());
+            process.exit(0);
+        case "-h":
+            console.log(helpMenu());
             process.exit(0);
         case "--version":
-            console.log(`Bun Version Manager (v${VERSION})`);
+            getVersion()
             process.exit(0);
+        case "-v":
+            getVersion()
+            process.exit(0);    
         case "--list":
-            const versions = await fetchVersions();
-            console.log("Versions available:")
-            versions.forEach((version: String) => {
-                version = version.replace('bun-', '');
-                process.stdout.write(version + "");
-                if (version == versions[versions.length - 1].toString().replace('bun-', '')) {
-                    process.stdout.write(". ");
-                } else {
-                    process.stdout.write(", ")
-                }
-            });
-            process.exit(0);
+            try {
+                const versions = await fetchVersions();
+                console.log("Versions available:")
+                versions?.forEach((version: String) => {
+                    version = version.replace('bun-', '');
+                    process.stdout.write(version + "");
+                    if (version == versions[versions.length - 1].toString().replace('bun-', '')) {
+                        process.stdout.write(". ");
+                    } else {
+                        process.stdout.write(", ")
+                    }
+                });
+            } catch (e) {
+                console.log("Failed to fetch available versions.")
+            }
             process.exit(0);
         case "--latest":
-            console.log('Show latest version');
+            console.log("Latest version available:")
+            console.log(await fetchLatestVersion())
             process.exit(0);
         case "install":
             console.log('Install a version');
@@ -42,9 +53,9 @@ async function main() {
             process.exit(0);
 
         default:
-            console.log(HELP_MENU)
-            process.exit(0)
+            helpMenu();
+            process.exit(0);
     }
 }
 
-main()
+main();

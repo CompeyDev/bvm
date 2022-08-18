@@ -1,7 +1,7 @@
-import getPlatform from '../utils/getPlatform';
+import getPlatform1  from '../utils/getPlatform';
 import axios from 'axios';
 
-export async function fetchVersions(): Promise<any> {
+export async function fetchVersions(): Promise<Array<String>|undefined> {
     const res = await axios.get(`https://api.github.com/repos/oven-sh/bun/releases`);
     const json = await res.data;
     let finalAr: string[] = [];
@@ -13,7 +13,7 @@ export async function fetchVersions(): Promise<any> {
     return finalAr
 }
 
-export async function fetchLatestVersion(): Promise<any> {
+export async function fetchLatestVersion(): Promise<String|undefined> {
     const res = await axios.get(`https://api.github.com/repos/oven-sh/bun/releases/latest`);
     const json = await res.data;
     const tag = json.tag_name;
