@@ -100,4 +100,4 @@ lib/**/*
 
 # TypeScript build output
 dist
-dist/**/*
+dist/*
