@@ -3,8 +3,10 @@ import listVersions from './commands/listVersions';
 import { fetchVersions, fetchLatestVersion } from './lib/fetchVersions';
 import getVersion from './commands/version';
 import helpMenu from './commands/help'
+import install from './commands/install';
 const args = process.argv.slice(2);
 const command = args[0];
+const param = args[1];
 
 async function main() {
     if (!command) {
@@ -46,7 +48,8 @@ async function main() {
             console.log(await fetchLatestVersion())
             process.exit(0);
         case "install":
-            console.log('Install a version');
+            console.log(`Installing version ${param}...`)
+            install(param);
             process.exit(0);
         case "uninstall":
             console.log('Uninstall a version');

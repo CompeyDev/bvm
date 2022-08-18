@@ -1,4 +1,4 @@
-import getPlatform1  from '../utils/getPlatform';
+import getPlatform  from '../utils/getPlatform';
 import axios from 'axios';
 
 export async function fetchVersions(): Promise<Array<String>|undefined> {
